@@ -3,12 +3,20 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 import { deleteCategory, getCategories } from "../../../../api/category.api";
 import ErrorMessage from "../../../../shared/components/error.page";
 import DialogModalComponent from "../../../../shared/components/ui-components/DialogModal";
+import { titleAction } from "../../../../store/title.action";
+import { storeTitle } from "../../../../store/title.store";
 import AddCategoryComponent from "./add-category.page";
 
 const AdminCategoryComponent = () => {
   const [category, setCategoty] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  const [adminTitle, setAdminTitle] = useState(storeTitle.getState().pageTitle);
+  // dispatching action
+  useEffect(() => {
+    storeTitle.dispatch(titleAction("Category"));
+  }, []);
+
   const fetchAllCategory = () => {
     getCategories()
       .then((res) => {

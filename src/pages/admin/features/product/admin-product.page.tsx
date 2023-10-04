@@ -8,6 +8,8 @@ import {
 import ConfirmModalComponent from "../../../../shared/components/confirm-modal.page";
 import ErrorMessage from "../../../../shared/components/error.page";
 import Pagination from "../../../../shared/components/ui-components/Pagination";
+import { titleAction } from "../../../../store/title.action";
+import { storeTitle } from "../../../../store/title.store";
 import AddProductComponent from "./add-product.page";
 
 const AdminProductComponent = () => {
@@ -23,6 +25,11 @@ const AdminProductComponent = () => {
     page: 1,
     size: 10,
   });
+
+  // dispatching for title
+  useEffect(() => {
+    storeTitle.dispatch(titleAction("Products"));
+  }, []);
 
   // get products
   const getProducts = (params) => {
