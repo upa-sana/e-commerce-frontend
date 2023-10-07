@@ -14,10 +14,10 @@ const AdminHeaderComponent = () => {
   }, []);
 
   return (
-    <section className="bg-gray-700 h-16 p-4">
-      <h4 className="text-white font-bold">{adminTitle.title}</h4>
+    <header className="bg-gray-700 h-16 p-4">
+      <h1 className="text-white font-bold">{adminTitle.title}</h1>
       {/* {adminTitle ? <h4>{adminTitle.title}</h4> : <></>} */}
-    </section>
+    </header>
   );
 };
 

@@ -15,8 +15,8 @@ const HeaderComponent = () => {
   };
   return (
     <>
-      <section className="bg-gray-800 w-full h-18 text-sm">
-        <div className="header flex items-center justify-between gap-10 text-white font-medium p-2">
+      <header className="bg-gray-800 w-full h-18 text-sm">
+        <section className="header flex items-center justify-between gap-10 text-white font-medium p-2">
           <div className="logo">
             <img
               src="src/assets/images/shopping_cart.png"
@@ -67,8 +67,8 @@ const HeaderComponent = () => {
           <div className="cursor-pointer p-4" onClick={logout}>
             <FiLogOut />
           </div>
-        </div>
-      </section>
+        </section>
+      </header>
     </>
   );
 };
