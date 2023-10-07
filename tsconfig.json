@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Absolute path */
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@test/*": ["components/*"],
+      "@features/*": ["features/*"],
       "@utils/*": ["utils/*"],
       "@api": ["api/*"]
     }
