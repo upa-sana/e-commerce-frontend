@@ -1,7 +1,7 @@
+import { FormLayoutComponent } from "@layout/form-layout.page";
+import { TitleComponent } from "@shared/components/title.page";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormLayoutComponent from "../layout/form-layout.page";
-import TitleComponent from "../shared/components/title.page";
 const SignupComponent = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",

@@ -1,7 +1,8 @@
+import { readFromLocalStorage } from "@utils/local-storage.utils";
 import { FiLogOut } from "react-icons/fi";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { readFromLocalStorage } from "../utils/local-storage.utils";
+
 const HeaderComponent = () => {
   const userInfo = readFromLocalStorage("user");
   const navigate = useNavigate();

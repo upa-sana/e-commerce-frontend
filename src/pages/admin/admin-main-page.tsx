@@ -1,5 +1,5 @@
-import AdminContentComponent from "./admin-content.page";
-import SideBarComponent from "./side-bar.page";
+import { AdminContentComponent } from "@pages/admin/admin-content.page";
+import { SideBarComponent } from "@pages/admin/side-bar.page";
 
 const AdminMainComponent = () => {
   return (

@@ -1,10 +1,10 @@
+import { signinUser } from "@api/user.api";
+import { FormLayoutComponent } from "@layout/form-layout.page";
+import { ErrorMessage } from "@shared/components/error.page";
+import { TitleComponent } from "@shared/components/title.page";
+import { storeToLocalStorage } from "@utils/local-storage.utils";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signinUser } from "../api/user.api";
-import FormLayoutComponent from "../layout/form-layout.page";
-import ErrorMessage from "../shared/components/error.page";
-import TitleComponent from "../shared/components/title.page";
-import { storeToLocalStorage } from "../utils/local-storage.utils";
 const SigninComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

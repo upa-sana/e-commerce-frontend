@@ -1,5 +1,5 @@
+import { readFromLocalStorage } from "@utils/local-storage.utils";
 import axios from "axios";
-import { readFromLocalStorage } from "./local-storage.utils";
 const url = "http://localhost:8080/api";
 const token = readFromLocalStorage("token");
 const http = axios.create();

@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import { deleteProduct, fetchAllProducts } from "@api/product.api";
+import { ConfirmModalComponent } from "@shared/components/confirm-modal.page";
+import { ErrorMessage } from "@shared/components/error.page";
+import { Pagination } from "@shared/components/ui-components/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
-import {
-  deleteProduct,
-  fetchAllProducts,
-  putProduct,
-} from "../../../../api/product.api";
-import ConfirmModalComponent from "../../../../shared/components/confirm-modal.page";
-import ErrorMessage from "../../../../shared/components/error.page";
-import Pagination from "../../../../shared/components/ui-components/Pagination";
+
 import AddProductComponent from "./add-product.page";
 
 const AdminProductComponent = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState();
+  // const [errorMessage, setErrorMessage] = useState();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [singleProduct, setSingleProduct] = useState();
   const [openupdateProductModal, setOpenProductModal] = useState(false);
@@ -24,7 +22,8 @@ const AdminProductComponent = () => {
     size: 10,
   });
 
-  // get products
+  /*
+   // get products
   const getProducts = (params) => {
     fetchAllProducts(params)
       .then((res) => {
@@ -38,7 +37,21 @@ const AdminProductComponent = () => {
   useEffect(() => {
     getProducts({ page: 0, size: 10 });
   }, []);
+  */
+  //const { data, isLoading, isError, error }
 
+  const test = useQuery({
+    queryFn: () => fetchAllProducts({ page: 0, size: 10 }),
+    queryKey: "getProducts",
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    staleTime: Infinity,
+  });
+
+  const { data, isLoading, isError, error } = test;
+  const products = data?.data.data;
+
+  /*
   // update product
   const updateProduct = () => {
     putProduct(singleProduct._id, singleProduct)
@@ -51,6 +64,7 @@ const AdminProductComponent = () => {
         setErrorMessage(error.message);
       });
   };
+  */
 
   // remove product
   const removeProduct = () => {
@@ -99,7 +113,7 @@ const AdminProductComponent = () => {
   return (
     <section className="overflow-y-auto h-full">
       <div className="product-page">
-        <ErrorMessage className="mb-4" error={errorMessage} />
+        <ErrorMessage className="mb-4" error={error} />
         <div className="add-product flex items-center justify-between">
           <h4 className="pl-2 font-bold text-lg">Products</h4>
           <button

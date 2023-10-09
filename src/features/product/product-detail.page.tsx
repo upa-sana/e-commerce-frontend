@@ -1,6 +1,6 @@
+import { fetchProductsDetail } from "@api/product.api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchProductsDetail } from "../../api/product.api";
 
 const ProductDetailComponent = () => {
   const { productId } = useParams();
