@@ -14,7 +14,6 @@ const ProductComponent = () => {
   });
 
   const getProducts = () => {
-    console.log("params", params);
     const data = fetchProducts(categoryName, params)
       .then((res) => {
         setProducts(res.data.product);

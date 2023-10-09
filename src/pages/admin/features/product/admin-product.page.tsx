@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
   fetchAllProducts,
   putProduct,
 } from "../../../../api/product.api";
+import { getAllProducts } from "../../../../pages/admin/store/product.slice";
 import ConfirmModalComponent from "../../../../shared/components/confirm-modal.page";
 import ErrorMessage from "../../../../shared/components/error.page";
 import Pagination from "../../../../shared/components/ui-components/Pagination";
 import { titleAction } from "../../../../store/title.action";
 import { storeTitle } from "../../../../store/title.store";
+import { changeTitle } from "../../store/title.slice";
 import AddProductComponent from "./add-product.page";
 
 const AdminProductComponent = () => {
@@ -26,10 +29,21 @@ const AdminProductComponent = () => {
     size: 10,
   });
 
+  // product api call using redux and thunk.
+  const { storeProducts, error, pending } = useSelector(
+    (state) => state.productsFromStore
+  );
+  const dispatch = useDispatch();
+
   // dispatching for title
   useEffect(() => {
     storeTitle.dispatch(titleAction("Products"));
   }, []);
+
+  // redux toolkit title implement
+  const pageTitle = useSelector((state) => state.productPageTitle.title);
+  const dispatcher = useDispatch();
+  dispatcher(changeTitle("Products List"));
 
   // get products
   const getProducts = (params) => {
@@ -39,6 +53,8 @@ const AdminProductComponent = () => {
         setTotaldata(res.data.data.totalData);
       })
       .catch((error) => {});
+
+    dispatch(getAllProducts());
   };
 
   // call product
@@ -108,7 +124,7 @@ const AdminProductComponent = () => {
       <div className="product-page">
         <ErrorMessage className="mb-4" error={errorMessage} />
         <div className="add-product flex items-center justify-between">
-          <h4 className="pl-2 font-bold text-lg">Products</h4>
+          <h4 className="pl-2 font-bold text-lg">{pageTitle}</h4>
           <button
             className="btn-yellow"
             onClick={(e) => setOpenProductModal(true)}
@@ -130,7 +146,7 @@ const AdminProductComponent = () => {
               </tr>
             </thead>
             <tbody className="border">
-              {products?.map((item, index) => {
+              {storeProducts?.data?.data.map((item, index) => {
                 const byteArray = new Uint8Array(item.productImage?.data);
                 const base64String = btoa(
                   String.fromCharCode.apply(null, byteArray)
