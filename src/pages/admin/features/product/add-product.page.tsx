@@ -1,6 +1,6 @@
 import { postProduct, putProduct } from "@api/product.api";
-import { ErrorMessage } from "@shared/components/error.page";
-import { DialogModalComponent } from "@shared/components/ui-components/DialogModal";
+import ErrorMessage from "@shared/components/error.page";
+import DialogModalComponent from "@shared/components/ui-components/DialogModal";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 

@@ -1,6 +1,6 @@
 import { getCategories } from "@api/category.api";
-import { FeatureContainerComponent } from "@shared/components/feature-container.page";
-import { FeatureImageComponent } from "@shared/components/feature-image.page";
+import FeatureContainerComponent from "@shared/components/feature-container.page";
+import FeatureImageComponent from "@shared/components/feature-image.page";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

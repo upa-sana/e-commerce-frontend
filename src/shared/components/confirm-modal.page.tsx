@@ -1,5 +1,5 @@
-import { DialogModalComponent } from "@shared/components/ui-components/DialogModal";
 import { useState } from "react";
+import DialogModalComponent from "./ui-components/DialogModal";
 
 const ConfirmModalComponent = (props) => {
   const [errorMessage, setErrorMessage] = useState();

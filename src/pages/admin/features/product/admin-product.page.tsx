@@ -1,7 +1,7 @@
 import { deleteProduct, fetchAllProducts } from "@api/product.api";
-import { ConfirmModalComponent } from "@shared/components/confirm-modal.page";
-import { ErrorMessage } from "@shared/components/error.page";
-import { Pagination } from "@shared/components/ui-components/Pagination";
+import ConfirmModalComponent from "@shared/components/confirm-modal.page";
+import ErrorMessage from "@shared/components/error.page";
+import Pagination from "@shared/components/ui-components/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
