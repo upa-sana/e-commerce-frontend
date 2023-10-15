@@ -1,3 +1,4 @@
+import { DevTool } from "@hookform/devtools";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ const SigninComponent = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    control,
   } = useForm({
     defaultValues: {
       email: "",
@@ -23,18 +25,16 @@ const SigninComponent = () => {
     },
   });
 
-  debugger;
-  console.log("error message", errors);
   watch("email");
 
   const loginBtnClicked = () => {
     getSignIn();
   };
 
-  const getSignIn = async () => {
+  const getSignIn = async (userCred) => {
     const requestBody = {
-      email: email,
-      password: password,
+      email: userCred.email,
+      password: userCred.password,
     };
 
     const userLogin = signinUser(requestBody)
@@ -50,52 +50,20 @@ const SigninComponent = () => {
       .catch((error) => {
         setErrorMessage(error.response.data.error);
       });
-
-    /*
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    };
-
-    try {
-      const data = await fetch(
-        "http://localhost:8080/api/auth/login",
-        requestOptions
-      );
-      const loginInfo = await data.json();
-      // const loginMessage = loginInfo.message;
-      if (loginInfo.token) {
-        navigate("/products", {
-          state: {
-            token: loginInfo.token,
-          },
-        });
-      }
-    } catch (error) {
-      console.log("login failed", error);
-    }
-    */
   };
-
-  // useEffect(() => {
-  //   console.log("login btn flag", loginBtn);
-  //   getSignIn();
-  // }, [loginBtn]);
 
   const signup = (props) => {
     navigate("/sign-up");
   };
 
   const onSubmit = (data) => {
-    debugger;
-    console.log("data", data);
+    getSignIn({ email: data.emaill, password: data.password });
   };
   return (
     <>
       <ErrorMessage error={errorMessage} />
       <FormLayoutComponent>
-        <form className="form p-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form p-3" onSubmit={handleSubmit(onSubmit)} noValidate>
           <fieldset>
             <legend>
               <TitleComponent title={"Sign in"}></TitleComponent>
@@ -113,20 +81,21 @@ const SigninComponent = () => {
                 className="form-input"
                 type="email"
                 id="email"
-                name="email"
                 {...register("email", {
-                  required: true,
-                  minLength: 20,
+                  required: {
+                    value: true,
+                    message: "Required",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9.-]+@[a-z]+.[a-z]{2,3}$/,
+                    message: "Invalid email",
+                  },
                 })}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
                 aria-label="Enter an email"
                 aria-required="true"
               />
-              {errors.email?.type === "required" && (
-                <p role="alert">Required</p>
-              )}
+              <p className="text-red-500">{errors.email?.message}</p>
             </div>
             <div className="input-field mb-4 ">
               <label
@@ -141,27 +110,31 @@ const SigninComponent = () => {
               hover:border-yellow-300 focus:border-yellow-300 active:border-yellow-300 p-4"
                 type="password"
                 id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Required",
+                  },
+                  minLength: {
+                    value: 8,
+                    message: "Password must be atlest 8 character",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Password can't exceed 20 character",
+                  },
+                })}
                 autoComplete="off"
                 aria-label="Enter a password"
                 aria-required="true"
-                {...register("password", {
-                  required: "Required",
-                  minLength: 8,
-                  maxLength: 20,
-                })}
-                aria-invalid={errors.password ? "true" : "false"}
               />
-              {errors.password && <p role="alert">{errors.password.message}</p>}
+              <p className="text-red-500">{errors.password?.message}</p>
             </div>
             <div className="form-button mb-4">
               <button
                 className="btn-yellow"
-                type="button"
+                type="submit"
                 name="signin"
-                onClick={loginBtnClicked}
                 aria-label="Sign in to e-commerce application"
               >
                 Sign in
@@ -183,6 +156,7 @@ const SigninComponent = () => {
             </button>
           </fieldset>
         </form>
+        <DevTool control={control} />
       </FormLayoutComponent>
     </>
   );
