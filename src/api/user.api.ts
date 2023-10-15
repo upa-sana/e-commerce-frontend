@@ -1,4 +1,3 @@
-import http from "@utils/http.interceptor";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8080/api";
@@ -8,5 +7,5 @@ export const signinUser = (requestBody) => {
 };
 
 export const signupUser = (requestBody) => {
-  return http.post("/auth/signup", requestBody);
+  return axios.post(`${BASE_URL}/auth/signup`, requestBody);
 };

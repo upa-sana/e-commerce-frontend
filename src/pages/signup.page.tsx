@@ -1,9 +1,13 @@
+import { signupUser } from "@api/user.api";
 import { DevTool } from "@hookform/devtools";
 import FormLayoutComponent from "@layout/form-layout.page";
+import ErrorMessage from "@shared/components/error.page";
 import TitleComponent from "@shared/components/title.page";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
 const SignupComponent = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -12,11 +16,16 @@ const SignupComponent = () => {
     role: "User",
   });
 
+  const [errorMessage, setErrorMessage] = useState();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields, dirtyFields, isDirty, isValid },
     control,
+    watch,
+    setValue,
+    getValues,
   } = useForm({
     defaultValues: {
       name: "",
@@ -27,12 +36,16 @@ const SignupComponent = () => {
       age: 0,
       date: Date(),
     },
+    mode: "onTouched", // all: touched and change
   });
 
+  console.log("touch", touchedFields, "dirty:", dirtyFields, "valid", isValid); //observing all the field
   const { fields, append, remove } = useFieldArray({
     name: "contacts",
     control: control,
   });
+
+  const watchSignup = watch(); // no arguments means entire form is being watched.
 
   const navigate = useNavigate();
 
@@ -46,36 +59,33 @@ const SignupComponent = () => {
     }));
   };
 
-  const signupUser = async (event) => {
-    event.preventDefault();
-    setUserInfo(userInfo);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userInfo),
-    };
-
-    try {
-      const data = await fetch(
-        "http://localhost:8080/api/auth/signup",
-        requestOptions
-      );
-      const jsonData = await data.json();
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
   const signin = () => {
     navigate("/sign-in");
   };
 
   const onSubmit = (data) => {
-    debugger;
-    console.log("sign up data", data);
+    const userData = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+    };
+    signupMutuation.mutate(userData);
   };
+
+  const signupMutuation = useMutation({
+    mutationFn: signupUser,
+    mutationKey: "sign-up",
+    onMutate: (data, variables, context) => {},
+    onError: (error, variables, context) => {
+      setErrorMessage(error.response.data.error);
+    },
+  });
+
   return (
     <FormLayoutComponent>
+      <h4>watching value: {watchSignup.name}</h4>
+      <ErrorMessage error={errorMessage} />
       <form className="form p-3" onSubmit={handleSubmit(onSubmit)} noValidate>
         <fieldset>
           <legend>
@@ -135,6 +145,7 @@ const SignupComponent = () => {
                 },
               })}
             />
+            <p className="text-red-500">{errors.email?.message}</p>
           </div>
 
           <div className="font-extrabold text-sm mb-2">
@@ -167,6 +178,7 @@ const SignupComponent = () => {
                 },
               })}
             />
+            <p className="text-red-500">{errors.password?.message}</p>
           </div>
           <div className="font-extrabold text-sm mb-2">
             <label className="label" for="role" aria-label="Role of the user">
@@ -259,7 +271,7 @@ const SignupComponent = () => {
                 },
               })}
             />
-            <p className="text-red-500">{errors.name?.message}</p>
+            <p className="text-red-500">{errors.age?.message}</p>
           </div>
 
           <div className="font-extrabold text-sm mb-2">
@@ -275,7 +287,7 @@ const SignupComponent = () => {
               hover:border-yellow-300
               focus:border-yellow-300
               active:border-yellow-300 p-4"
-              placeholder="Enter your name"
+              placeholder="Age"
               type="text"
               id="date"
               {...register("date", {
@@ -286,7 +298,7 @@ const SignupComponent = () => {
                 },
               })}
             />
-            <p className="text-red-500">{errors.name?.message}</p>
+            <p className="text-red-500">{errors.date?.message}</p>
           </div>
 
           <div className="buttons">
@@ -299,6 +311,7 @@ const SignupComponent = () => {
               rounded-lg
               hover:bg-yellow-400"
               name="submit-btn"
+              disabled={!isDirty || !isValid}
             >
               Sign up
             </button>

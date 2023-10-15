@@ -30,15 +30,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Absolute path */
-    "baseUrl": "./src",
-    "paths": {
-      "@features/*": ["features/*"],
-      "@utils/*": ["utils/*"],
-      "@api": ["api/*"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
