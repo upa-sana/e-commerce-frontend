@@ -1,8 +1,8 @@
+import { fetchProducts } from "@api/product.api";
+import FeatureContainerComponent from "@shared/components/feature-container.page";
+import FeatureImageComponent from "@shared/components/feature-image.page";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchProducts } from "../../api/product.api";
-import FeatureContainerComponent from "../../shared/components/feature-container.page";
-import FeatureImageComponent from "../../shared/components/feature-image.page";
 const ProductComponent = () => {
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);

@@ -1,7 +1,8 @@
+import { postProduct, putProduct } from "@api/product.api";
+import ErrorMessage from "@shared/components/error.page";
+import DialogModalComponent from "@shared/components/ui-components/DialogModal";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { postProduct, putProduct } from "../../../../api/product.api";
-import ErrorMessage from "../../../../shared/components/error.page";
-import DialogModalComponent from "../../../../shared/components/ui-components/DialogModal";
 
 const AddProductComponent = (props) => {
   const [product, setProduct] = useState({
@@ -39,6 +40,7 @@ const AddProductComponent = (props) => {
     }));
   };
 
+  /*
   const addProduct = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -59,9 +61,9 @@ const AddProductComponent = (props) => {
         setCrudMode("ADD");
       });
   };
+  */
 
   const formatImage = (e) => {
-    debugger;
     const file = e.target.files[0];
     setFiles(file);
     const fileReader = new FileReader();
@@ -70,6 +72,25 @@ const AddProductComponent = (props) => {
     };
   };
 
+  const mutationUpdateProduct = useMutation({
+    mutationFn: putProduct,
+    mutationKey: "product updating",
+    onError: (error, variables, context) => {
+      debugger;
+      console.log(error, variables, context);
+    },
+    onSuccess: (data, variables, context) => {
+      debugger;
+      console.log(data);
+    },
+    onSettled: (data, error, variables, context) => {
+      debugger;
+    },
+    onMutate: (data, error, variables, context) => {
+      debugger;
+      console.log(data);
+    },
+  });
   const updateProduct = () => {
     const formData = new FormData();
     formData.append("name", product.name);
@@ -77,7 +98,9 @@ const AddProductComponent = (props) => {
     formData.append("description", product.description);
     formData.append("category", product.category);
     formData.append("productImage", files);
+    mutationUpdateProduct.mutate(props.product._id, formData);
 
+    /*
     putProduct(props.product._id, formData)
       .then((res) => {
         debugger;
@@ -91,6 +114,24 @@ const AddProductComponent = (props) => {
 
         // props.click();
       });
+      */
+  };
+
+  const mutationAddProduct = useMutation({
+    mutationFn: postProduct,
+    mutationKey: "product adding",
+    onMutate: (data, variables, context) => {},
+  });
+
+  const addProduct = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("description", product.description);
+    formData.append("category", product.category);
+    formData.append("productImage", files);
+    mutationAddProduct.mutate(formData);
   };
 
   return (

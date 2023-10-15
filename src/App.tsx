@@ -1,15 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import CategoriesComponent from "./features/category/categories.page";
-import ProductComponent from "./features/product/product";
-import ProductDetailComponent from "./features/product/product-detail.page";
-import AdminDashboardComponent from "./pages/admin/admin-dashboard.page";
-import AdminLayoutComponent from "./pages/admin/admin-layout.page";
-import AdminCategoryComponent from "./pages/admin/features/category/admin-category.page";
-import AdminProductComponent from "./pages/admin/features/product/admin-product.page";
-import MainLayoutComponent from "./pages/layout.page";
-import SigninComponent from "./pages/signin.page";
-import SignupComponent from "./pages/signup.page";
+
+import CategoriesComponent from "@features/category/categories.page";
+import ProductComponent from "@features/product/product";
+import ProductDetailComponent from "@features/product/product-detail.page";
+import AdminDashboardComponent from "@pages/admin/admin-dashboard.page";
+import AdminLayoutComponent from "@pages/admin/admin-layout.page";
+import AdminCategoryComponent from "@pages/admin/features/category/admin-category.page";
+import AdminProductComponent from "@pages/admin/features/product/admin-product.page";
+import MainLayoutComponent from "@pages/layout.page";
+import SigninComponent from "@pages/signin.page";
+import SignupComponent from "@pages/signup.page";
 
 function App() {
   // const queryClient = new QueryClient();
