@@ -1,4 +1,4 @@
-const PREFIX = "dev_env";
+import { PREFIX } from "@utils/env.parser";
 export const storeToLocalStorage = (key, value) => {
   const newKey = `${PREFIX}_${key}`;
   if (typeof value === "object") {

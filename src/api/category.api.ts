@@ -1,4 +1,4 @@
-import http from "../utils/http.interceptor";
+import http from "@utils/http.interceptor";
 
 export const getCategories = () => {
   // return axios.get(GET_CATEGORIES_URL);
@@ -6,7 +6,7 @@ export const getCategories = () => {
 };
 
 export const postCategory = (category) => {
-  return http.post("/category", category,  {
+  return http.post("/category", category, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

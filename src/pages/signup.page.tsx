@@ -9,12 +9,14 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const SignupComponent = () => {
+  /*
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
     password: "",
     role: "User",
   });
+  */
 
   const [errorMessage, setErrorMessage] = useState();
 
@@ -48,7 +50,7 @@ const SignupComponent = () => {
   const watchSignup = watch(); // no arguments means entire form is being watched.
 
   const navigate = useNavigate();
-
+  /*
   const updateUser = (e) => {
     // const { name, value } = e.target;
     const name = e.target.name;
@@ -58,7 +60,7 @@ const SignupComponent = () => {
       [name]: value,
     }));
   };
-
+*/
   const signin = () => {
     navigate("/sign-in");
   };
