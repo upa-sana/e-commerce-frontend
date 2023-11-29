@@ -1,6 +1,9 @@
+import { Role } from "@pages/admin/constant/role.constant";
+import { readFromLocalStorage } from "@utils/local-storage.utils";
 import { useNavigate } from "react-router-dom";
 
 const SubHeaderComponent = () => {
+  const user = readFromLocalStorage("user");
   const navigate = useNavigate();
   const goToAdminPanel = () => {
     navigate("/admin");
@@ -19,9 +22,12 @@ const SubHeaderComponent = () => {
           Category 3
         </div> */}
         {/* </div> */}
-        <div className="underline cursor-pointer" onClick={goToAdminPanel}>
-          Go to Admin
-        </div>
+
+        {user.role === Role.ADMIN && (
+          <div className="underline cursor-pointer" onClick={goToAdminPanel}>
+            Go to Admin
+          </div>
+        )}
       </header>
     </>
   );

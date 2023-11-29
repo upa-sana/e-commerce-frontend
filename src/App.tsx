@@ -11,33 +11,41 @@ import AdminProductComponent from "@pages/admin/features/product/admin-product.p
 import MainLayoutComponent from "@pages/layout.page";
 import SigninComponent from "@pages/signin.page";
 import SignupComponent from "@pages/signup.page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
-  // const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
   return (
     <>
-      {/* <QueryClientProvider client={queryClient}> */}
-      <Routes>
-        <Route path="/" Component={MainLayoutComponent}>
-          <Route index Component={CategoriesComponent} />
-          <Route path="/:categoryName/products" Component={ProductComponent} />
-          <Route
-            path="/:categoryName/products/:productId"
-            Component={ProductDetailComponent}
-          />
-        </Route>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" Component={MainLayoutComponent}>
+            <Route index Component={CategoriesComponent} />
+            <Route
+              path="/:categoryName/products"
+              Component={ProductComponent}
+            />
+            <Route
+              path="/:categoryName/products/:productId"
+              Component={ProductDetailComponent}
+            />
+          </Route>
 
-        <Route path="/admin" Component={AdminLayoutComponent}>
-          <Route index Component={AdminDashboardComponent} />
-          <Route path="/admin/products" Component={AdminProductComponent} />
-          <Route path="/admin/category" Component={AdminCategoryComponent} />
-        </Route>
+          <Route path="/admin" Component={AdminLayoutComponent}>
+            <Route index Component={AdminDashboardComponent} />
+            <Route path="/admin/products" Component={AdminProductComponent} />
+            <Route path="/admin/category" Component={AdminCategoryComponent} />
+          </Route>
 
-        <Route path="/sign-in" Component={SigninComponent}></Route>
-        <Route path="/sign-up" Component={SignupComponent}></Route>
-      </Routes>
-
-      {/* </QueryClientProvider> */}
+          <Route path="/sign-in" Component={SigninComponent}></Route>
+          <Route path="/sign-up" Component={SignupComponent}></Route>
+        </Routes>
+        <ReactQueryDevtools
+          initialIsOpen={false}
+          position="bottom"
+        ></ReactQueryDevtools>
+      </QueryClientProvider>
     </>
   );
 }

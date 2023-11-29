@@ -32,12 +32,9 @@ const SigninComponent = () => {
   };
 
   const getSignIn = async (userCred) => {
-    const requestBody = {
-      email: userCred.email,
-      password: userCred.password,
-    };
+    debugger;
 
-    const userLogin = signinUser(requestBody)
+    const userLogin = signinUser(userCred)
       .then((res) => {
         if (res.data.token) {
           storeToLocalStorage("user", res.data.userInfo);
@@ -57,7 +54,7 @@ const SigninComponent = () => {
   };
 
   const onSubmit = (data) => {
-    getSignIn({ email: data.emaill, password: data.password });
+    getSignIn({ email: data.email, password: data.password });
   };
   return (
     <>

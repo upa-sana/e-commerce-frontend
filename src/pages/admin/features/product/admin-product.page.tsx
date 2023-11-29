@@ -48,7 +48,7 @@ const AdminProductComponent = () => {
 
   const test = useQuery({
     queryFn: () => fetchAllProducts({ page: 0, size: 10 }),
-    queryKey: "getProducts",
+    queryKey: ["get products"],
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     staleTime: Infinity,

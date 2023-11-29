@@ -6,6 +6,7 @@ export default {
       fontSize: {
         sm: "0.875rem",
       },
+      
     },
   },
   plugins: [],
